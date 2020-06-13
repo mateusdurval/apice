@@ -64,7 +64,7 @@
         <!-- Título "Usuários" -->
        <div class="container" style="margin-top: 1%;">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-3">
                     <h1>Usuários</h1>
                 </div>
             </div>
@@ -84,68 +84,91 @@
             </div>
         </div>
 
-        <!-- Botões de Cadastro e Relatórios -->
+        <!-- Pesquisa, Botões de Cadastro e Relatórios -->
         <div class="container">
             <div class="row">
-                <div class="col-md-auto offset-md-7 " style=" padding: 0;">
-                    <form action="">
-                        <input type="text" class="form-control form-control-sm" placeholder="Faça uma busca">
-                    </form>
-                </div>
-                <div class="col-md-auto boder" style="padding-left: 1px;">
-                    <button type="submit" class="btn btn-sm btn-dark"><i class="fas fa-search"></i></button>
-                </div>
-                <div class="col-md-auto border " style=" padding: 0">
-                    <a href="" class="btn btn-sm btn-dark"><i class="fas fa-sticky-note"></i> Relatório</a>
-                    <a href="{{route('home.create')}}" class="btn btn-sm btn-success">Adicionar <i class="fas fa-user-plus"></i></a>
+                <div class="col-md-12" style="padding: 0;">
+                    <div class="row" style="margin-left: 60%">
+                            <div class="col-md-auto" style="padding-right: 0;">
+                                <input type="text" name="search" class="form-control form-control-sm search" placeholder="Pesquisar por nome">
+                            </div>
+                            <div class="col-md-auto" style="padding-left: 1px">
+                                <button type="submit" class="btn btn-sm btn-info btnSearch"><i class="fas fa-search"></i></button>
+                            </div>
+                        <div class="col-md-auto" style="padding: 0; text-align: right">
+                            <a href="" class="btn btn-sm btn-dark"><i class="fas fa-sticky-note"></i> Relatório</a>
+                            <a href="{{route('home.create')}}" class="btn btn-sm btn-success">Adicionar <i class="fas fa-user-plus"></i></a>
+                        </div>
+                            
+                    </div>
                 </div>
             </div>
         </div>
-
+        
         @if(session('message'))
-        <div class="alert alert-success alert-dismissible">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            {{ session('message') }}
-        </div>
+            <div class="container">
+                <div class="row" style="margin-top: 1%;">
+                    <div class="col-md-12">
+                        <div class="alert alert-success" style="text-align: center;">
+                            {{session('message')}}
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endif
+        
 
         <!-- Título de Usuários Cadastrados -->
         <div class="container">
-            <div class="col-md-auto">
-                <h4 style="text-align: center; margin-top: 2%;">Usuários Cadastrados ({{$total}})</h4>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 style="text-align: center; margin-top: 2%;">Usuários Cadastrados ({{$total}})</h4>
+                </div>
             </div>
         </div>
 
         <!-- Foreach Table -->
         <div class="container">
-                
-            <div class="col-md-12" style="padding: 0; margin-top: 2%;">                
-                <table class="table table-sm table-hover">
-                    <thead>
-                        <tr>
-                            <th class="color-th-table">#ID</th>
-                            <th class="color-th-table">Nome:</th>
-                            <th class="color-th-table">CEP:</th>
-                            <th class="color-th-table">CPF:</th>
-                            <th class="color-th-table">Nascimento:</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($usuarios as $usuario)
-                        <tr>
-                            <td>{{$usuario->id}}</td>
-                            <td><a href="" class="btn btn-sm btn-primary"><i class="far fa-address-card"></i> {{$usuario->nome}}</a></td>
-                            <td>{{$usuario->cep}}</td>
-                            <td>{{$usuario->cpf}}</td>
-                            <td>{{$usuario->nascimento}}</td>
-                            <td><a href="home/edit/{{$usuario->id}}" style="color: rgba(0,0,0,0.8);" data-id="{{$usuario->id}}" class="btnEdit"><i class="far fa-edit"></i></a></td> 
-                            <td><a href="javascript:void(0)" style="color: rgba(0,0,0,0.8);" data-id="{{$usuario->id}}" class="btnRemove"><i class="far fa-trash-alt"></i></a></td>      
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <div class="row">
+                <div class="col-md-12" style="margin-top: 2%;">                
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th class="color-th-table"></th>
+                                <th class="color-th-table">#ID</th>
+                                <th class="color-th-table">Nome:</th>
+                                <th class="color-th-table">Contato:</th>
+                                <th class="color-th-table">CPF:</th>
+                                <th class="color-th-table">Nascimento:</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(session('search'))
+                                <tr>
+                                    <td>AAA</td>
+                                </tr>
+                            @else
+                                @foreach($usuarios as $usuario)
+                                <tr>
+                                    <td><input type="checkbox" class="check" value="{{$usuario->id}}" data-id="{{$usuario->id}}"></td>                         
+                                    <td>{{$usuario->id}}</td>
+                                    <td style="width: 15%;"><a href="" class="btn btn-sm btn-info"><i class="far fa-address-card"></i> {{$usuario->nome}}</a></td>
+                                    <td>{{$usuario->telefone}}</td>
+                                    <td>{{$usuario->cpf}}</td>
+                                    <td>{{$usuario->nascimento}}</td>
+                                    <td><a href="home/edit/{{$usuario->id}}" style="color: rgba(0,0,0,0.8);" data-id="{{$usuario->id}}" class="btnEdit"><i class="far fa-edit"></i></a></td> 
+                                    <td><a href="javascript:void(0)" style="color: rgba(0,0,0,0.8);" data-id="{{$usuario->id}}" class="btnRemove"><i class="far fa-trash-alt"></i></a></td>      
+                                </tr>
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+                    <div class="col-md-1" style="padding:0">
+                        <a href="javascript:void(0)" class="btn btn-sm btn-danger btnSeveralDelete" style="display:none; border-radius: 50px">Excluir <i class="far fa-trash-alt"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -180,10 +203,11 @@
                 let buttonRemove = null;
                 $(document).on('click', '.btnRemove', function() {
                     id = $(this).data('id');
-                    buttonRemove = $(this); 
+                    buttonRemove = $(this);
                     $('#MyModal').modal('toggle');
                 });
 
+                //chama o método de exclusão com ajax
                 $(document).on('click', '.btnConfirmDelete', function() {
                     $.ajax({
                         method: 'DELETE',
@@ -195,13 +219,48 @@
                                 $('#MyModal').modal('toggle');
                             }
                         } else {
-                            alert("not success");
+                            alert("Erro ao deletar usuário.");
                         }
-                    })
+                    });
                 });
-            });s
+            });
         </script>
 
+        <script>
+            $(document).ready(function() {
+                var array = [];
+                let selected = null;
+
+                $(document).on('click', '.check', function() {
+                    if($.inArray($(this).val(), array)) {
+                        console.log('já tem');
+                    } else {
+                        console.log('não tem');
+                    }
+                    array.push($(this).data('id'));
+                    console.log(array);
+                    $(".btnSeveralDelete").css({display:'block'});
+
+                    if($(this).attr('checked', true)) {
+                        $(".btnRemove").css({display:'none'});
+                    } else {
+                        $(".btnRemove").css({display:'block'});
+                    }
+                });
+
+                $(document).on('click', '.btnSeveralDelete', function() {
+                    $.ajax({
+                        method: 'POST',
+                        url: '/home/several_destroy/',
+                        data: {ids: array}
+                    }).done(function(data) {
+                        window.location = '/';
+                    });
+                });
+            });
+        </script>
+
+        <script src="{{URL::asset('pace/pace.min.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     </body>

@@ -15,14 +15,14 @@ class CriaTabelaUsuarios extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome', 30);
-            $table->string('nascimento', 10);
-            $table->string('rg');
+            $table->string('nome', 15);
+            $table->string('sobrenome', 15);
             $table->string('cpf');
-            $table->string('cep');
-            $table->string('logradouro', 20)->nullable(false)->change();
-            $table->string('numero', 7);
-            $table->string('complemento', 15);
+            $table->string('rg', 13);
+            $table->string('nascimento', 10);
+            $table->string('email');
+            $table->string('telefone', 15);
+            $table->string('cep', 9)->nullable();
             $table->timestamps();
         });
     }

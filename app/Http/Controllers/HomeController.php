@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Home;
+use Dompdf\Dompdf;
 
 class HomeController extends Controller
 {
@@ -45,17 +46,15 @@ class HomeController extends Controller
     
     public function store(Request $request) 
     {
-        $home = new Home;
-        $home->nome = $request->nome;
-        $home->nascimento = $request->nascimento;
-        $home->rg = $request->rg;
-        $home->cpf = $request->cpf;
-        $home->cep = $request->cep;
-        $home->logradouro = $request->logradouro;
-        $home->numero = $request->numero;
-        $home->complemento = $request->complemento;
-        $home->save();  
-        return redirect()->route('home.index');
+        $usuario = 
+        $_COOKIE['nome'] = $request->nome;
+        $_COOKIE['sobrenome'] = $request->sobrenome;
+        $_COOKIE['cpf'] = $request->cpf;
+        $_COOKIE['rg'] = $request->rg;
+        $_COOKIE['nascimento'] = $request->nascimento;
+        $_COOKIE['email'] = $request->email;
+        $_COOKIE['telefone'] = $request->telefone;
+        return $_COOKIE['sobrenome'];
     }
 
     public function show($id) 
@@ -82,4 +81,24 @@ class HomeController extends Controller
             echo "not";
         }
     } 
+
+    public function several_Destroy(Request $request) {
+        print_r($request->ids);
+        for($x=0;$x<sizeof($request->ids);$x++) {
+            $id = $request->ids[$x];
+            $registro = Home::find($id);
+            if($registro && $registro->delete()) {
+                echo "ok";
+            } else {
+                echo "not";
+            }
+        }
+    }
+
+
+    public function busca($busca) {
+        $resultado = Home::where('nome', $busca)->get()->first();
+        return $resultado;
+    }
+
 }
